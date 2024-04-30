@@ -20,14 +20,36 @@ func main() {
 	fmt.Println(a)
 	fmt.Println(b)
 
+	fmt.Println("push 5000")
+	b, _ = push(b, 5000, 5400, 5600)
+	fmt.Println(a)
+	fmt.Println(b)
+
+	fmt.Println("pop")
+	b, _ = pop(b)
+	fmt.Println(a)
+	fmt.Println(b)
+
+	fmt.Println("insert 6000 at 2")
+	b = insert(b, 6000, 2)
+	fmt.Println(a)
+	fmt.Println(b)
+
+	fmt.Println("remove 6000")
+	f := func(a []int) ([]int, int) {
+		return a, len(a)
+	}
+	fmt.Println(f(b))
+
 }
 
-func push(a []int, v int) []int {
-	return append(a, v)
+func push(a []int, v ...int) (s []int, l int) {
+	s = append(a, v...)
+	return
 }
 
-func pop(a []int) []int {
-	return a[:len(a)-1]
+func pop(a []int) ([]int, int) {
+	return a[:len(a)-1], len(a) - 1
 }
 
 func shift(a []int) []int {
@@ -38,8 +60,11 @@ func unshift(a []int, v int) []int {
 	return append([]int{v}, a...)
 }
 
-func insert(a []int, p, v int) []int {
-	return append(a[:p], append([]int{v}, a[p:]...)...)
+func insert(a []int, v int, p int) (s []int) {
+	s = append(a, 0)
+	s = append(s[:p+1], s[p:len(s)-1]...)
+	s[p] = v
+	return
 }
 
 func remove(a []int, p int) []int {
