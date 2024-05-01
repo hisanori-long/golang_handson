@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/hisanori-long/golang_handson/tree/main/Chapter3/modules/pointer"
+	"github.com/hisanori-long/golang_handson/Chapter3/modules/pointer"
 )
 
 func main() {
