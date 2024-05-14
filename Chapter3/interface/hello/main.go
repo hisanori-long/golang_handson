@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 )
 
 // General is all type data.
@@ -16,13 +17,16 @@ type GData interface {
 // NData is structure.
 type NData struct {
 	Name string
-	Data int
+	Data []int
 }
 
 // Set is NData method.
 func (nd *NData) Set(nm string, g General) GData {
 	nd.Name = nm
-	nd.Data = g.(int)
+	if reflect.TypeOf(g) == reflect.SliceOf(reflect.TypeOf(0)) {
+		nd.Data = g.([]int)
+
+	}
 	return nd
 }
 
@@ -34,12 +38,14 @@ func (nd *NData) Print() {
 // SData is structure.
 type SData struct {
 	Name string
-	Data string
+	Data []string
 }
 
 func (sd *SData) Set(nm string, g General) GData {
 	sd.Name = nm
-	sd.Data = g.(string)
+	if reflect.TypeOf(g) == reflect.SliceOf(reflect.TypeOf("")) {
+		sd.Data = g.([]string)
+	}
 	return sd
 }
 
@@ -68,8 +74,8 @@ func (gd *GDataImpl) Print() {
 
 func main() {
 	var data = []GData{}
-	data = append(data, new(NData).Set("Taro", 21))
-	data = append(data, new(SData).Set("Hanako", "341"))
+	data = append(data, new(NData).Set("Taro", []int{1, 2, 3}))
+	data = append(data, new(SData).Set("Hanako", []string{"hello", "bye"}))
 	data = append(data, new(NData).Set("Jiro", 32))
 	data = append(data, new(SData).Set("Sachiko", "happy?"))
 	for _, ob := range data {
