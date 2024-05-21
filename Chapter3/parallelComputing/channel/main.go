@@ -26,9 +26,20 @@ func second(n int, c chan string) {
 	}
 }
 
+func total(cs chan int, cr chan int) {
+	n := <-cs
+	fmt.Println("n =", n)
+	t := 0
+	for i := 1; i <= n; i++ {
+		t += i
+	}
+	cr <- t
+}
+
 func main() {
-	c := make(chan string)
-	go first(10, c)
-	second(10, c)
-	fmt.Println()
+	cs := make(chan int)
+	cr := make(chan int)
+	go total(cs, cr)
+	cs <- 100
+	fmt.Println("total:", <-cr)
 }
